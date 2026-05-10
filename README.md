@@ -1,8 +1,8 @@
-# Hamburg Aktivismus-Kalender 2026
+# Events for Moral Ambition Hamburg 2026
 
 Interaktiver Kalender mit Demos, Kundgebungen und politischen Events in Hamburg — Mai bis August 2026.
 
-🔗 **[→ Kalender öffnen](https://DEIN-USERNAME.github.io/hh-aktivismus-kalender)**
+🔗 **[→ Kalender öffnen](https://juliandominicseyd.github.io/Events-for-Moral-Ambition-Hamburg)**
 
 ---
 
@@ -24,11 +24,9 @@ Interaktiver Kalender mit Demos, Kundgebungen und politischen Events in Hamburg 
 
 ---
 
-## Lokal bearbeiten
+## Events hinzufügen oder ändern
 
-Einfach `index.html` in einem Browser öffnen — keine Installation nötig.
-
-Um Events hinzuzufügen oder zu ändern, die `EVENTS`-Liste in `index.html` bearbeiten:
+Die `EVENTS`-Liste in `index.html` bearbeiten:
 
 ```js
 {
@@ -44,10 +42,8 @@ Um Events hinzuzufügen oder zu ändern, die `EVENTS`-Liste in `index.html` bear
 
 ## Setup GitHub Pages
 
-1. Repository auf GitHub anlegen (Name z.B. `hh-aktivismus-kalender`)
-2. `index.html` und `README.md` hochladen
-3. Settings → Pages → Branch: `main` → Ordner: `/ (root)` → Save
-4. Fertig — Link erscheint nach ~60 Sekunden
+1. Settings → Pages → Branch: `main` → Ordner: `/ (root)` → Save
+2. Live unter: `https://juliandominicseyd.github.io/Events-for-Moral-Ambition-Hamburg`
 
 ---
 

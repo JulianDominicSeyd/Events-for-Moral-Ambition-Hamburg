@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hamburg Aktivismus-Kalender 2026</title>
+<title>Events for Moral Ambition Hamburg 2026</title>
 <meta name="description" content="Demos, Kundgebungen und politische Events in Hamburg – Mai bis August 2026">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -333,12 +333,12 @@
 
 <header>
   <div>
-    <h1>Hamburg<br><span>Aktivismus-Kalender</span></h1>
+    <h1>Events for<br><span>Moral Ambition Hamburg</span></h1>
     <p>Demos · Kundgebungen · Events · 2026</p>
   </div>
   <div class="header-right">
-    <a href="https://vernetztgegenrechts.hamburg/veranstaltungen-2/" target="_blank" rel="noopener">
-      Alle Quellen →
+    <a href="https://github.com/JulianDominicSeyd/Events-for-Moral-Ambition-Hamburg" target="_blank" rel="noopener">
+      GitHub →
     </a>
   </div>
 </header>
@@ -420,7 +420,7 @@ function renderCal() {
   while (cells.length % 7 !== 0) cells.push({d: new Date(y, m+1, cells.length-startDow-last.getDate()+1), cur: false});
 
   document.getElementById("cal").innerHTML = cells.map(({d, cur: isCur}) => {
-    const key = d.toISOString().slice(0,10);
+    const key = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
     const isToday = d.toDateString() === today.toDateString();
     const evs = EVENTS.filter(e => e.date === key);
     const pills = evs.map(e =>
