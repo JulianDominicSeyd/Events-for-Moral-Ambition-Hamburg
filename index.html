@@ -147,7 +147,7 @@
 
   .weekdays {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: 3px;
     margin-bottom: 3px;
   }
@@ -165,7 +165,7 @@
 
   .days {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: 3px;
   }
 
@@ -175,6 +175,8 @@
     border-radius: var(--radius);
     padding: 6px;
     min-height: 78px;
+    min-width: 0;
+    overflow: hidden;
     transition: border-color 0.15s;
     position: relative;
   }
