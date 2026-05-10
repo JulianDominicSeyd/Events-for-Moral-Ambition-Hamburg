@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hamburg Aktivismus-Kalender 2026</title>
+<meta name="description" content="Demos, Kundgebungen und politische Events in Hamburg – Mai bis August 2026">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f4f0;
+    --surface: #ffffff;
+    --surface2: #f0ede8;
+    --text: #1a1916;
+    --text-muted: #6b6860;
+    --border: #e0ddd8;
+    --accent: #d63f2e;
+    --accent-light: #fbeae8;
+
+    --klima: #2d6a4f; --klima-bg: #e8f5ee;
+    --antifa: #c0392b; --antifa-bg: #fdecea;
+    --demo: #1a5fa8; --demo-bg: #e8f1fb;
+    --lgbtq: #8e3a9d; --lgbtq-bg: #f4eaf8;
+    --rad: #5b4fcf; --rad-bg: #eeecfb;
+    --workshop: #a05c00; --workshop-bg: #fdf3e3;
+
+    --radius: 10px;
+    --font: 'DM Sans', sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0 0 4rem;
+  }
+
+  header {
+    background: var(--text);
+    color: #fff;
+    padding: 2.5rem 2rem 2rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  header h1 {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  header h1 span {
+    color: var(--accent);
+  }
+
+  header p {
+    font-size: 0.85rem;
+    color: #aaa;
+    font-family: var(--mono);
+    margin-top: 0.4rem;
+  }
+
+  .header-right {
+    text-align: right;
+  }
+
+  .header-right a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    color: #999;
+    text-decoration: none;
+    font-family: var(--mono);
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 6px 12px;
+    transition: all 0.15s;
+  }
+
+  .header-right a:hover { color: #fff; border-color: #666; }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 0;
+  }
+
+  .month-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .month-tab {
+    font-family: var(--font);
+    font-size: 0.85rem;
+    font-weight: 500;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 7px 18px;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: all 0.15s;
+  }
+
+  .month-tab:hover { border-color: #bbb; color: var(--text); }
+
+  .month-tab.active {
+    background: var(--text);
+    color: #fff;
+    border-color: var(--text);
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+  }
+
+  .leg {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.77rem;
+    color: var(--text-muted);
+  }
+
+  .leg-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+    margin-bottom: 3px;
+  }
+
+  .weekday {
+    text-align: center;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    padding: 4px 0;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-family: var(--mono);
+  }
+
+  .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+  }
+
+  .day {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 6px;
+    min-height: 78px;
+    transition: border-color 0.15s;
+    position: relative;
+  }
+
+  .day:hover { border-color: #bbb; }
+
+  .day.other-month {
+    background: var(--surface2);
+    opacity: 0.4;
+  }
+
+  .day.today {
+    border-color: var(--accent);
+    border-width: 2px;
+  }
+
+  .day-num {
+    font-size: 0.72rem;
+    font-family: var(--mono);
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .day.today .day-num {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .pill {
+    display: block;
+    font-size: 0.67rem;
+    font-weight: 500;
+    border-radius: 4px;
+    padding: 2px 5px;
+    margin-bottom: 2px;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    line-height: 1.5;
+    transition: opacity 0.15s, transform 0.1s;
+  }
+
+  .pill:hover { opacity: 0.82; transform: scale(1.02); }
+
+  .pill-klima   { background: var(--klima-bg);    color: var(--klima); }
+  .pill-antifa  { background: var(--antifa-bg);   color: var(--antifa); }
+  .pill-demo    { background: var(--demo-bg);     color: var(--demo); }
+  .pill-lgbtq   { background: var(--lgbtq-bg);    color: var(--lgbtq); }
+  .pill-rad     { background: var(--rad-bg);      color: var(--rad); }
+  .pill-workshop{ background: var(--workshop-bg); color: var(--workshop); }
+
+  .upcoming {
+    margin-top: 2.5rem;
+  }
+
+  .upcoming h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .event-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .event-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.85rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: var(--text);
+    transition: border-color 0.15s, transform 0.12s;
+    cursor: pointer;
+  }
+
+  .event-card:hover {
+    border-color: #bbb;
+    transform: translateX(3px);
+  }
+
+  .event-date-block {
+    min-width: 44px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .event-date-block .eday {
+    font-size: 1.35rem;
+    font-weight: 600;
+    font-family: var(--mono);
+    line-height: 1;
+    color: var(--text);
+  }
+
+  .event-date-block .emon {
+    font-size: 0.68rem;
+    font-family: var(--mono);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .event-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .event-info { flex: 1; }
+
+  .event-title {
+    font-size: 0.92rem;
+    font-weight: 500;
+    margin-bottom: 2px;
+  }
+
+  .event-meta {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  .event-arrow {
+    font-size: 1rem;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 3rem;
+    font-size: 0.77rem;
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+
+  @media (max-width: 600px) {
+    .day { min-height: 58px; padding: 4px; }
+    .pill { font-size: 0.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Hamburg<br><span>Aktivismus-Kalender</span></h1>
+    <p>Demos · Kundgebungen · Events · 2026</p>
+  </div>
+  <div class="header-right">
+    <a href="https://vernetztgegenrechts.hamburg/veranstaltungen-2/" target="_blank" rel="noopener">
+      Alle Quellen →
+    </a>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="month-tabs" id="monthTabs"></div>
+
+  <div class="legend">
+    <div class="leg"><div class="leg-dot" style="background:var(--klima)"></div>Klima / Umwelt</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--antifa)"></div>Antifaschismus</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--demo)"></div>Demo / Kundgebung</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--lgbtq)"></div>LGBTQ+</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--rad)"></div>Radverkehr</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--workshop)"></div>Workshop / Treffen</div>
+  </div>
+
+  <div class="weekdays">
+    <div class="weekday">Mo</div><div class="weekday">Di</div><div class="weekday">Mi</div>
+    <div class="weekday">Do</div><div class="weekday">Fr</div><div class="weekday">Sa</div>
+    <div class="weekday">So</div>
+  </div>
+  <div class="days" id="cal"></div>
+
+  <div class="upcoming">
+    <h2>Alle Events</h2>
+    <div class="event-list" id="eventList"></div>
+  </div>
+
+  <footer>
+    <p>Stand: Mai 2026 · Alle Angaben ohne Gewähr · Quellen immer vor Teilnahme prüfen</p>
+  </footer>
+
+</div>
+
+<script>
+const EVENTS = [
+  {date:"2026-05-08",title:"Schulstreik gegen Wehrpflicht",cat:"demo",url:"https://www.die-linke-hamburg.de/aktuelles/termine/kategorie/demonstration-kundgebung/oder/",info:"Hachmannplatz · ganztags"},
+  {date:"2026-05-08",title:"#LiegendDemo – ME/CFS-Solidarität",cat:"demo",url:"https://www.die-linke-hamburg.de/aktuelles/termine/kategorie/demonstration-kundgebung/oder/",info:"Versch. Orte · bis 12. Mai"},
+  {date:"2026-05-20",title:"Gegen Burschenschaft Germania",cat:"antifa",url:"https://www.demokrateam.org/aktionen/kreativer-widerstand-gegen-rechts/",info:"Hamburg · Adresse auf Quelle prüfen"},
+  {date:"2026-05-28",title:"Offenes Treffen gegen Rechts",cat:"antifa",url:"https://www.demokrateam.org/aktionen/offenes-treffen-gegen-rechts/",info:"Hamburg · Adresse auf Quelle prüfen"},
+  {date:"2026-05-29",title:"Critical Mass",cat:"rad",url:"https://criticalmass.in/hamburg",info:"19:00 Uhr · wechselnder Treffpunkt"},
+  {date:"2026-05-30",title:"Workshop: Gegen rechte Parolen",cat:"workshop",url:"https://www.demokrateam.org/aktionen/argumenieren-gegen-rechte-parolen-2/",info:"Hamburg · Adresse auf Quelle prüfen"},
+  {date:"2026-06-04",title:"Offenes Antifa-Treffen",cat:"antifa",url:"https://www.demokrateam.org/aktionen/offenes-antifa-treffen-4/",info:"Hamburg · Adresse auf Quelle prüfen"},
+  {date:"2026-06-13",title:"PRÜF! Demo Hamburg",cat:"demo",url:"https://pruef-demos.de/hamburg",info:"14:00 Uhr · Jungfernstieg"},
+  {date:"2026-06-26",title:"Critical Mass",cat:"rad",url:"https://criticalmass.in/hamburg",info:"19:00 Uhr · wechselnder Treffpunkt"},
+  {date:"2026-07-25",title:"Hamburg Pride Week (Beginn)",cat:"lgbtq",url:"https://www.hamburg-pride.de/pride-2026",info:"25. Jul – 2. Aug · diverse Orte"},
+  {date:"2026-08-01",title:"CSD-Demonstration Hamburg",cat:"lgbtq",url:"https://www.hamburg-pride.de/pride-2026",info:"12:00 Uhr · Start Lübecker Str."},
+];
+
+const MONTHS = [
+  {y:2026,m:4,label:"Mai",short:"Mai"},
+  {y:2026,m:5,label:"Juni",short:"Jun"},
+  {y:2026,m:6,label:"Juli",short:"Jul"},
+  {y:2026,m:7,label:"August",short:"Aug"},
+];
+
+const MON_NAMES = ["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"];
+
+let cur = 0;
+
+function buildTabs() {
+  document.getElementById("monthTabs").innerHTML = MONTHS.map((m, i) =>
+    `<button class="month-tab${i===cur?' active':''}" onclick="go(${i})">${m.label}</button>`
+  ).join("");
+}
+
+function go(i) { cur = i; buildTabs(); renderCal(); }
+
+function renderCal() {
+  const {y, m} = MONTHS[cur];
+  const today = new Date();
+  const first = new Date(y, m, 1);
+  const last = new Date(y, m+1, 0);
+  let startDow = (first.getDay() + 6) % 7;
+  let cells = [];
+  for (let i = 0; i < startDow; i++) cells.push({d: new Date(y, m, 1-startDow+i), cur: false});
+  for (let d = 1; d <= last.getDate(); d++) cells.push({d: new Date(y, m, d), cur: true});
+  while (cells.length % 7 !== 0) cells.push({d: new Date(y, m+1, cells.length-startDow-last.getDate()+1), cur: false});
+
+  document.getElementById("cal").innerHTML = cells.map(({d, cur: isCur}) => {
+    const key = d.toISOString().slice(0,10);
+    const isToday = d.toDateString() === today.toDateString();
+    const evs = EVENTS.filter(e => e.date === key);
+    const pills = evs.map(e =>
+      `<a class="pill pill-${e.cat}" href="${e.url}" target="_blank" rel="noopener" title="${e.title} · ${e.info}">${e.title}</a>`
+    ).join("");
+    return `<div class="day${!isCur?' other-month':''}${isToday?' today':''}">
+      <div class="day-num">${d.getDate()}</div>${pills}</div>`;
+  }).join("");
+}
+
+function renderList() {
+  const catColors = {
+    klima: 'var(--klima)', antifa: 'var(--antifa)', demo: 'var(--demo)',
+    lgbtq: 'var(--lgbtq)', rad: 'var(--rad)', workshop: 'var(--workshop)'
+  };
+  document.getElementById("eventList").innerHTML = EVENTS.map(e => {
+    const d = new Date(e.date);
+    const day = d.getDate();
+    const mon = MON_NAMES[d.getMonth()];
+    return `<a class="event-card" href="${e.url}" target="_blank" rel="noopener">
+      <div class="event-date-block">
+        <div class="eday">${String(day).padStart(2,'0')}</div>
+        <div class="emon">${mon}</div>
+      </div>
+      <div class="event-dot" style="background:${catColors[e.cat]}"></div>
+      <div class="event-info">
+        <div class="event-title">${e.title}</div>
+        <div class="event-meta">${e.info}</div>
+      </div>
+      <div class="event-arrow">→</div>
+    </a>`;
+  }).join("");
+}
+
+buildTabs();
+renderCal();
+renderList();
+</script>
+</body>
+</html>
