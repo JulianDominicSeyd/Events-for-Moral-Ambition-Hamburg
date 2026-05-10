@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Events for Moral Ambition Hamburg 2026</title>
-<meta name="description" content="Demos, Kundgebungen und politische Events in Hamburg – Mai bis August 2026">
+<meta name="description" content="Demos, rallies and political events in Hamburg – May to August 2026">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -317,6 +317,50 @@
     flex-shrink: 0;
   }
 
+  .contact-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .contact-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .contact-text strong {
+    font-size: 0.95rem;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .contact-text p {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+  }
+
+  .contact-text a {
+    font-size: 0.85rem;
+    font-family: var(--mono);
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .contact-text a:hover {
+    text-decoration: underline;
+  }
+
   footer {
     text-align: center;
     margin-top: 3rem;
@@ -336,7 +380,7 @@
 <header>
   <div>
     <h1>Events for<br><span>Moral Ambition Hamburg</span></h1>
-    <p>Demos · Kundgebungen · Events · 2026</p>
+    <p>Demos · Rallies · Events · 2026</p>
   </div>
   <div class="header-right">
     <a href="https://github.com/JulianDominicSeyd/Events-for-Moral-Ambition-Hamburg" target="_blank" rel="noopener">
@@ -350,28 +394,37 @@
   <div class="month-tabs" id="monthTabs"></div>
 
   <div class="legend">
-    <div class="leg"><div class="leg-dot" style="background:var(--klima)"></div>Klima / Umwelt</div>
-    <div class="leg"><div class="leg-dot" style="background:var(--antifa)"></div>Antifaschismus</div>
-    <div class="leg"><div class="leg-dot" style="background:var(--demo)"></div>Demo / Kundgebung</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--klima)"></div>Climate / Environment</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--antifa)"></div>Anti-fascism</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--demo)"></div>Demo / Rally</div>
     <div class="leg"><div class="leg-dot" style="background:var(--lgbtq)"></div>LGBTQ+</div>
-    <div class="leg"><div class="leg-dot" style="background:var(--rad)"></div>Radverkehr</div>
-    <div class="leg"><div class="leg-dot" style="background:var(--workshop)"></div>Workshop / Treffen</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--rad)"></div>Cycling</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--workshop)"></div>Workshop / Meeting</div>
   </div>
 
   <div class="weekdays">
-    <div class="weekday">Mo</div><div class="weekday">Di</div><div class="weekday">Mi</div>
-    <div class="weekday">Do</div><div class="weekday">Fr</div><div class="weekday">Sa</div>
-    <div class="weekday">So</div>
+    <div class="weekday">Mon</div><div class="weekday">Tue</div><div class="weekday">Wed</div>
+    <div class="weekday">Thu</div><div class="weekday">Fri</div><div class="weekday">Sat</div>
+    <div class="weekday">Sun</div>
   </div>
   <div class="days" id="cal"></div>
 
   <div class="upcoming">
-    <h2>Alle Events</h2>
+    <h2>All Events</h2>
     <div class="event-list" id="eventList"></div>
   </div>
 
+  <div class="contact-box">
+    <div class="contact-icon">✉</div>
+    <div class="contact-text">
+      <strong>Submit an event or get involved?</strong>
+      <p>Know of a demo, rally or action that's missing here? Or want to become part of the Moral Ambition movement in Hamburg?</p>
+      <a href="mailto:Mail@JulianSeyd.com">Mail@JulianSeyd.com</a>
+    </div>
+  </div>
+
   <footer>
-    <p>Stand: Mai 2026 · Alle Angaben ohne Gewähr · Quellen immer vor Teilnahme prüfen</p>
+    <p>Last updated: May 2026 · No guarantee of accuracy · Always verify with the original source before attending · Event names are kept in their original language.</p>
   </footer>
 
 </div>
@@ -400,17 +453,16 @@ const EVENTS = [
   {date:"2026-08-08",title:"PRÜF! Demo Hamburg",cat:"demo",url:"https://pruef-demos.de/hamburg",info:"14:00 Uhr · Jungfernstieg"},
   {date:"2026-08-28",title:"Critical Mass August",cat:"rad",url:"https://criticalmass.in/hamburg",info:"19:00 Uhr · wechselnder Treffpunkt"},
   {date:"2026-08-29",title:"DemoRave Reclaim Hamburg – Großdemo",cat:"demo",url:"https://reclaim-hh.de/",info:"15:00 Uhr · Große Elbstraße · 30+ Kollektive"},
-
 ];
 
 const MONTHS = [
-  {y:2026,m:4,label:"Mai",short:"Mai"},
-  {y:2026,m:5,label:"Juni",short:"Jun"},
-  {y:2026,m:6,label:"Juli",short:"Jul"},
+  {y:2026,m:4,label:"May",short:"May"},
+  {y:2026,m:5,label:"June",short:"Jun"},
+  {y:2026,m:6,label:"July",short:"Jul"},
   {y:2026,m:7,label:"August",short:"Aug"},
 ];
 
-const MON_NAMES = ["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"];
+const MON_NAMES = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
 let cur = 0;
 
