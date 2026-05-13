@@ -19,12 +19,13 @@
     --accent: #d63f2e;
     --accent-light: #fbeae8;
 
-    --klima: #2d6a4f; --klima-bg: #e8f5ee;
-    --antifa: #c0392b; --antifa-bg: #fdecea;
-    --demo: #1a5fa8; --demo-bg: #e8f1fb;
-    --lgbtq: #8e3a9d; --lgbtq-bg: #f4eaf8;
-    --rad: #5b4fcf; --rad-bg: #eeecfb;
-    --workshop: #a05c00; --workshop-bg: #fdf3e3;
+    --climate:  #2d6a4f; --climate-bg:  #e8f5ee;
+    --equal:    #8e3a9d; --equal-bg:    #f4eaf8;
+    --antifa:   #c0392b; --antifa-bg:   #fdecea;
+    --peace:    #1a6e8a; --peace-bg:    #e6f4f8;
+    --tax:      #b06000; --tax-bg:      #fdf0e0;
+    --food:     #5c7a1f; --food-bg:     #eef4e0;
+    --workshop: #5b4fcf; --workshop-bg: #eeecfb;
 
     --radius: 10px;
     --font: 'DM Sans', sans-serif;
@@ -223,12 +224,13 @@
 
   .pill:hover { opacity: 0.82; transform: scale(1.02); }
 
-  .pill-klima   { background: var(--klima-bg);    color: var(--klima); }
-  .pill-antifa  { background: var(--antifa-bg);   color: var(--antifa); }
-  .pill-demo    { background: var(--demo-bg);     color: var(--demo); }
-  .pill-lgbtq   { background: var(--lgbtq-bg);    color: var(--lgbtq); }
-  .pill-rad     { background: var(--rad-bg);      color: var(--rad); }
-  .pill-workshop{ background: var(--workshop-bg); color: var(--workshop); }
+  .pill-climate  { background: var(--climate-bg);  color: var(--climate); }
+  .pill-equal    { background: var(--equal-bg);    color: var(--equal); }
+  .pill-antifa   { background: var(--antifa-bg);   color: var(--antifa); }
+  .pill-peace    { background: var(--peace-bg);    color: var(--peace); }
+  .pill-tax      { background: var(--tax-bg);      color: var(--tax); }
+  .pill-food     { background: var(--food-bg);     color: var(--food); }
+  .pill-workshop { background: var(--workshop-bg); color: var(--workshop); }
 
   .upcoming {
     margin-top: 2.5rem;
@@ -259,18 +261,17 @@
     align-items: center;
     gap: 1rem;
     text-decoration: none;
-    color: var(--text);
-    transition: border-color 0.15s, transform 0.12s;
-    cursor: pointer;
+    color: inherit;
+    transition: border-color 0.15s, box-shadow 0.15s;
   }
 
   .event-card:hover {
     border-color: #bbb;
-    transform: translateX(3px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   }
 
   .event-date-block {
-    min-width: 44px;
+    min-width: 36px;
     text-align: center;
     flex-shrink: 0;
   }
@@ -394,12 +395,13 @@
   <div class="month-tabs" id="monthTabs"></div>
 
   <div class="legend">
-    <div class="leg"><div class="leg-dot" style="background:var(--klima)"></div>Climate / Environment</div>
-    <div class="leg"><div class="leg-dot" style="background:var(--antifa)"></div>Anti-fascism</div>
-    <div class="leg"><div class="leg-dot" style="background:var(--demo)"></div>Demo / Rally</div>
-    <div class="leg"><div class="leg-dot" style="background:var(--lgbtq)"></div>LGBTQ+</div>
-    <div class="leg"><div class="leg-dot" style="background:var(--rad)"></div>Cycling</div>
-    <div class="leg"><div class="leg-dot" style="background:var(--workshop)"></div>Workshop / Meeting</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--climate)"></div>Climate</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--equal)"></div>Equal Rights</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--antifa)"></div>Antifa</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--peace)"></div>Peace</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--tax)"></div>Tax Fairness</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--food)"></div>Food Transition</div>
+    <div class="leg"><div class="leg-dot" style="background:var(--workshop)"></div>Workshop / Meetup</div>
   </div>
 
   <div class="weekdays">
@@ -431,30 +433,30 @@
 
 <script>
 const EVENTS = [
-  {date:"2026-05-08",title:"Schulstreik gegen Wehrpflicht",cat:"demo",url:"https://www.die-linke-hamburg.de/aktuelles/termine/kategorie/demonstration-kundgebung/oder/",info:"Hachmannplatz · ganztags"},
-  {date:"2026-05-08",title:"#LiegendDemo – ME/CFS-Solidarität",cat:"demo",url:"https://www.die-linke-hamburg.de/aktuelles/termine/kategorie/demonstration-kundgebung/oder/",info:"Versch. Orte · bis 12. Mai"},
-  {date:"2026-05-09",title:"PRÜF! Demo Hamburg",cat:"demo",url:"https://pruef-demos.de/hamburg",info:"14:00 Uhr · Jungfernstieg"},
-  {date:"2026-05-14",title:"Come On Boys",cat:"demo",url:"https://www.instagram.com/p/DX1YNS3AuT5/?img_index=1",info:"14:00 Uhr · Heiligengeistfeld Hamburg"},
+  {date:"2026-05-08",title:"Schulstreik gegen Wehrpflicht",cat:"peace",url:"https://www.die-linke-hamburg.de/aktuelles/termine/kategorie/demonstration-kundgebung/oder/",info:"Hachmannplatz · ganztags"},
+  {date:"2026-05-08",title:"#LiegendDemo – ME/CFS-Solidarität",cat:"equal",url:"https://www.die-linke-hamburg.de/aktuelles/termine/kategorie/demonstration-kundgebung/oder/",info:"Versch. Orte · bis 12. Mai"},
+  {date:"2026-05-09",title:"PRÜF! Demo Hamburg",cat:"antifa",url:"https://pruef-demos.de/hamburg",info:"14:00 Uhr · Jungfernstieg"},
+  {date:"2026-05-14",title:"Come On Boys",cat:"equal",url:"https://www.instagram.com/p/DX1YNS3AuT5/?img_index=1",info:"14:00 Uhr · Heiligengeistfeld Hamburg"},
   {date:"2026-05-20",title:"Gegen Burschenschaft Germania",cat:"antifa",url:"https://www.demokrateam.org/aktionen/kreativer-widerstand-gegen-rechts/",info:"Hamburg · Adresse auf Quelle prüfen"},
   {date:"2026-05-28",title:"Offenes Treffen gegen Rechts",cat:"antifa",url:"https://www.demokrateam.org/aktionen/offenes-treffen-gegen-rechts/",info:"Hamburg · Adresse auf Quelle prüfen"},
-  {date:"2026-05-29",title:"Zukunftstag",cat:"klima",url:"https://zukunftstag-bergedorf.org",info:"11:00 Uhr · Serrahn Bergedorf"},
-  {date:"2026-05-29",title:"Critical Mass",cat:"rad",url:"https://criticalmass.in/hamburg",info:"19:00 Uhr · wechselnder Treffpunkt"},
+  {date:"2026-05-29",title:"Zukunftstag",cat:"climate",url:"https://zukunftstag-bergedorf.org",info:"11:00 Uhr · Serrahn Bergedorf"},
+  {date:"2026-05-29",title:"Critical Mass",cat:"climate",url:"https://criticalmass.in/hamburg",info:"19:00 Uhr · wechselnder Treffpunkt"},
   {date:"2026-05-30",title:"Workshop: Gegen rechte Parolen",cat:"workshop",url:"https://www.demokrateam.org/aktionen/argumenieren-gegen-rechte-parolen-2/",info:"Hamburg · Adresse auf Quelle prüfen"},
   {date:"2026-06-04",title:"Offenes Antifa-Treffen",cat:"antifa",url:"https://www.demokrateam.org/aktionen/offenes-antifa-treffen-4/",info:"Hamburg · Adresse auf Quelle prüfen"},
   {date:"2026-06-04",title:"Moral Ambition MeetUp",cat:"workshop",url:"https://community.moralambition.org/c/events/hamburg-member-meetup-e13e3c",info:"18:30 Uhr · Gaußstraße 136"},
-  {date:"2026-06-13",title:"PRÜF! Demo Hamburg",cat:"demo",url:"https://pruef-demos.de/hamburg",info:"14:00 Uhr · Jungfernstieg"},
+  {date:"2026-06-13",title:"PRÜF! Demo Hamburg",cat:"antifa",url:"https://pruef-demos.de/hamburg",info:"14:00 Uhr · Jungfernstieg"},
   {date:"2026-06-18",title:"Filmvorführung: Nicht von schlechten Eltern",cat:"workshop",url:"https://vernetztgegenrechts.hamburg/event/filmvorfuehrung-nicht-von-schlechten-eltern/",info:"17:00–20:00 Uhr · Diskussion & Gespräch"},
-  {date:"2026-06-24",title:"DemoRave Aktionswoche (Beginn)",cat:"rad",url:"https://www.instagram.com/demorave.hamburg/",info:"24.–28. Juni · diverse Aktionen"},
-  {date:"2026-06-26",title:"Critical Mass",cat:"rad",url:"https://criticalmass.in/hamburg",info:"19:00 Uhr · wechselnder Treffpunkt"},
+  {date:"2026-06-24",title:"DemoRave Aktionswoche (Beginn)",cat:"equal",url:"https://www.instagram.com/demorave.hamburg/",info:"24.–28. Juni · diverse Aktionen"},
+  {date:"2026-06-26",title:"Critical Mass",cat:"climate",url:"https://criticalmass.in/hamburg",info:"19:00 Uhr · wechselnder Treffpunkt"},
   {date:"2026-07-02",title:"Moral Ambition MeetUp",cat:"workshop",url:"https://www.moralambition.org",info:"18:30 Uhr · Gaußstraße 136"},
-  {date:"2026-07-11",title:"PRÜF! Demo Hamburg",cat:"demo",url:"https://pruef-demos.de/hamburg",info:"14:00 Uhr · Jungfernstieg"},
-  {date:"2026-07-25",title:"Hamburg Pride Week (Beginn)",cat:"lgbtq",url:"https://www.hamburg-pride.de/pride-2026",info:"25. Jul – 2. Aug · diverse Orte"},
-  {date:"2026-07-31",title:"Critical Mass Juli",cat:"rad",url:"https://criticalmass.in/hamburg",info:"19:00 Uhr · wechselnder Treffpunkt"},
-  {date:"2026-08-01",title:"CSD-Demonstration Hamburg",cat:"lgbtq",url:"https://www.hamburg-pride.de/pride-2026",info:"12:00 Uhr · Start Lübecker Str."},
+  {date:"2026-07-11",title:"PRÜF! Demo Hamburg",cat:"antifa",url:"https://pruef-demos.de/hamburg",info:"14:00 Uhr · Jungfernstieg"},
+  {date:"2026-07-25",title:"Hamburg Pride Week (Beginn)",cat:"equal",url:"https://www.hamburg-pride.de/pride-2026",info:"25. Jul – 2. Aug · diverse Orte"},
+  {date:"2026-07-31",title:"Critical Mass Juli",cat:"climate",url:"https://criticalmass.in/hamburg",info:"19:00 Uhr · wechselnder Treffpunkt"},
+  {date:"2026-08-01",title:"CSD-Demonstration Hamburg",cat:"equal",url:"https://www.hamburg-pride.de/pride-2026",info:"12:00 Uhr · Start Lübecker Str."},
   {date:"2026-08-06",title:"Moral Ambition MeetUp",cat:"workshop",url:"https://www.moralambition.org",info:"18:30 Uhr · Gaußstraße 136"},
-  {date:"2026-08-08",title:"PRÜF! Demo Hamburg",cat:"demo",url:"https://pruef-demos.de/hamburg",info:"14:00 Uhr · Jungfernstieg"},
-  {date:"2026-08-28",title:"Critical Mass August",cat:"rad",url:"https://criticalmass.in/hamburg",info:"19:00 Uhr · wechselnder Treffpunkt"},
-  {date:"2026-08-29",title:"DemoRave Reclaim Hamburg – Großdemo",cat:"demo",url:"https://reclaim-hh.de/",info:"15:00 Uhr · Große Elbstraße · 30+ Kollektive"},
+  {date:"2026-08-08",title:"PRÜF! Demo Hamburg",cat:"antifa",url:"https://pruef-demos.de/hamburg",info:"14:00 Uhr · Jungfernstieg"},
+  {date:"2026-08-28",title:"Critical Mass August",cat:"climate",url:"https://criticalmass.in/hamburg",info:"19:00 Uhr · wechselnder Treffpunkt"},
+  {date:"2026-08-29",title:"DemoRave Reclaim Hamburg – Großdemo",cat:"equal",url:"https://reclaim-hh.de/",info:"15:00 Uhr · Große Elbstraße · 30+ Kollektive"},
 ];
 
 const MONTHS = [
@@ -501,8 +503,13 @@ function renderCal() {
 
 function renderList() {
   const catColors = {
-    klima: 'var(--klima)', antifa: 'var(--antifa)', demo: 'var(--demo)',
-    lgbtq: 'var(--lgbtq)', rad: 'var(--rad)', workshop: 'var(--workshop)'
+    climate:  'var(--climate)',
+    equal:    'var(--equal)',
+    antifa:   'var(--antifa)',
+    peace:    'var(--peace)',
+    tax:      'var(--tax)',
+    food:     'var(--food)',
+    workshop: 'var(--workshop)'
   };
   document.getElementById("eventList").innerHTML = EVENTS.map(e => {
     const d = new Date(e.date);
