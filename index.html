@@ -370,6 +370,87 @@
     font-family: var(--mono);
   }
 
+  /* Past day in calendar */
+  .day.past-day:not(.other-month) {
+    opacity: 0.42;
+  }
+  .day.past-day .pill {
+    filter: grayscale(0.4);
+  }
+
+  /* Past event cards */
+  .event-card.past {
+    opacity: 0.45;
+    pointer-events: auto;
+  }
+  .event-card.past:hover {
+    opacity: 0.7;
+  }
+  .event-card.past .event-title {
+    color: var(--text-muted);
+  }
+  .event-card.past .eday {
+    color: var(--text-muted) !important;
+  }
+
+  /* Past events section toggle */
+  .past-toggle {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    background: none;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    padding: 9px 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+    transition: all 0.15s;
+  }
+  .past-toggle:hover {
+    border-color: #bbb;
+    color: var(--text);
+  }
+  .past-toggle .toggle-arrow {
+    transition: transform 0.2s;
+    font-style: normal;
+  }
+  .past-toggle.open .toggle-arrow {
+    transform: rotate(180deg);
+  }
+
+  /* Past events list hidden by default */
+  .past-list {
+    display: none;
+    margin-top: 8px;
+  }
+  .past-list.visible {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Section divider label */
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin: 0 0 0.75rem;
+  }
+
+  .no-upcoming {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    padding: 1rem 0;
+    font-family: var(--mono);
+  }
+
   @media (max-width: 600px) {
     .day { min-height: 58px; padding: 4px; }
     .pill { font-size: 0.6rem; }
@@ -412,8 +493,13 @@
   <div class="days" id="cal"></div>
 
   <div class="upcoming">
-    <h2>All Events</h2>
+    <h2>Upcoming Events</h2>
     <div class="event-list" id="eventList"></div>
+    <button class="past-toggle" id="pastToggle" onclick="togglePast()" style="display:none">
+      <i class="toggle-arrow">&#9662;</i>
+      <span id="pastToggleLabel"></span>
+    </button>
+    <div class="past-list" id="pastList"></div>
   </div>
 
   <div class="contact-box">
@@ -469,7 +555,10 @@ const MONTHS = [
 
 const MON_NAMES = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
-let cur = 0;
+// Auto-select the current month tab
+const _now = new Date();
+let cur = MONTHS.findIndex(({y, m}) => y === _now.getFullYear() && m === _now.getMonth());
+if (cur === -1) cur = 0;
 
 function buildTabs() {
   document.getElementById("monthTabs").innerHTML = MONTHS.map((m, i) =>
@@ -479,9 +568,14 @@ function buildTabs() {
 
 function go(i) { cur = i; buildTabs(); renderCal(); }
 
+function todayMidnight() {
+  const t = new Date(); t.setHours(0,0,0,0); return t;
+}
+
 function renderCal() {
   const {y, m} = MONTHS[cur];
   const today = new Date();
+  const todayMs = todayMidnight().getTime();
   const first = new Date(y, m, 1);
   const last = new Date(y, m+1, 0);
   let startDow = (first.getDay() + 6) % 7;
@@ -493,11 +587,13 @@ function renderCal() {
   document.getElementById("cal").innerHTML = cells.map(({d, cur: isCur}) => {
     const key = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
     const isToday = d.toDateString() === today.toDateString();
+    const isPast = isCur && d.getTime() < todayMs;
     const evs = EVENTS.filter(e => e.date === key);
     const pills = evs.map(e =>
       `<a class="pill pill-${e.cat}" href="${e.url}" target="_blank" rel="noopener" title="${e.title} · ${e.info}">${e.title}</a>`
     ).join("");
-    return `<div class="day${!isCur?' other-month':''}${isToday?' today':''}">
+    const classes = ['day', !isCur ? 'other-month' : '', isToday ? 'today' : '', isPast ? 'past-day' : ''].filter(Boolean).join(' ');
+    return `<div class="${classes}">
       <div class="day-num">${d.getDate()}</div>${pills}</div>`;
   }).join("");
 }
@@ -512,11 +608,13 @@ function renderList() {
     food:     'var(--food)',
     workshop: 'var(--workshop)'
   };
-  document.getElementById("eventList").innerHTML = EVENTS.map(e => {
-    const d = new Date(e.date);
+  const todayMs = todayMidnight().getTime();
+
+  function cardHTML(e, isPast) {
+    const d = new Date(e.date + 'T00:00:00');
     const day = d.getDate();
     const mon = MON_NAMES[d.getMonth()];
-    return `<a class="event-card" href="${e.url}" target="_blank" rel="noopener">
+    return `<a class="event-card${isPast ? ' past' : ''}" href="${e.url}" target="_blank" rel="noopener">
       <div class="event-date-block">
         <div class="eday">${String(day).padStart(2,'0')}</div>
         <div class="emon">${mon}</div>
@@ -528,7 +626,45 @@ function renderList() {
       </div>
       <div class="event-arrow">→</div>
     </a>`;
-  }).join("");
+  }
+
+  const upcoming = EVENTS
+    .filter(e => new Date(e.date + 'T00:00:00').getTime() >= todayMs)
+    .sort((a, b) => a.date.localeCompare(b.date));
+
+  const past = EVENTS
+    .filter(e => new Date(e.date + 'T00:00:00').getTime() < todayMs)
+    .sort((a, b) => b.date.localeCompare(a.date)); // most recent first
+
+  const listEl = document.getElementById("eventList");
+  const toggleEl = document.getElementById("pastToggle");
+  const pastEl = document.getElementById("pastList");
+  const labelEl = document.getElementById("pastToggleLabel");
+
+  if (upcoming.length > 0) {
+    listEl.innerHTML = upcoming.map(e => cardHTML(e, false)).join("");
+  } else {
+    listEl.innerHTML = `<p class="no-upcoming">No upcoming events — check back soon.</p>`;
+  }
+
+  if (past.length > 0) {
+    pastEl.innerHTML = past.map(e => cardHTML(e, true)).join("");
+    labelEl.textContent = `${past.length} past event${past.length !== 1 ? 's' : ''}`;
+    toggleEl.style.display = "flex";
+  }
+}
+
+function togglePast() {
+  const toggleEl = document.getElementById("pastToggle");
+  const pastEl = document.getElementById("pastList");
+  const labelEl = document.getElementById("pastToggleLabel");
+  const isOpen = pastEl.classList.contains("visible");
+  pastEl.classList.toggle("visible", !isOpen);
+  toggleEl.classList.toggle("open", !isOpen);
+  const count = pastEl.querySelectorAll(".event-card").length;
+  labelEl.textContent = isOpen
+    ? `${count} past event${count !== 1 ? 's' : ''}`
+    : `Hide past events`;
 }
 
 buildTabs();
